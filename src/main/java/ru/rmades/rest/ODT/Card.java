@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class Card extends Stuff{
     private Image image;
-    public Card(short bonus, String text,Image image){
-        super(bonus,text,image);
+    public Card(short atack,short health,short steps, String text,Image image){
+        super(atack, health, steps, text, image);
     }
 }

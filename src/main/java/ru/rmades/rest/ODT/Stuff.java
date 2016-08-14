@@ -7,8 +7,8 @@ import java.awt.*;
  */
 public class Stuff extends Baff{
     private Image image;
-    public Stuff(short bonus, String text, Image image){
-        super(bonus,text);
+    public Stuff(short atack,short health,short steps, String text, Image image){
+        super(atack, health, steps, text);
         this.image = image;
     }
     public Image getImage(){

@@ -5,8 +5,8 @@ package ru.rmades.rest.ODT;
  */
 public class Race extends Baff{
     String name;
-    public Race(short bonus, String text,String name){
-        super(bonus,text);
+    public Race(short atack,short health,short steps, String text,String name){
+        super(atack, health, steps,text);
         this.name = name;
     }
 
