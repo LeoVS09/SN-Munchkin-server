@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SN-Munchkin-server.iml" filepath="$PROJECT_DIR$/.idea/modules/SN-Munchkin-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SN-Munchkin-server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/SN-Munchkin-server_main.iml" group="SN-Munchkin-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SN-Munchkin-server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/SN-Munchkin-server_test.iml" group="SN-Munchkin-server" />
+    </modules>
+  </component>
+</project>
