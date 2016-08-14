@@ -1,4 +1,4 @@
-package ru.rmades.rest.ODT;
+package ru.rmades.rest.ODT.Game;
 
 /**
  * Created by Администратор on 14.08.2016.

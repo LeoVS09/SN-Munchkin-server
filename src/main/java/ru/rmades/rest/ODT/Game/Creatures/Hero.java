@@ -1,4 +1,10 @@
-package ru.rmades.rest.ODT;
+package ru.rmades.rest.ODT.Game.Creatures;
+
+import ru.rmades.rest.ODT.Game.Baffs.Baff;
+import ru.rmades.rest.ODT.Game.Baffs.ClasS;
+import ru.rmades.rest.ODT.Game.Baffs.Race;
+import ru.rmades.rest.ODT.Game.Baffs.Stuff;
+import ru.rmades.rest.ODT.User;
 
 import java.util.ArrayList;
 

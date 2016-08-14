@@ -1,5 +1,7 @@
 package ru.rmades.rest.ODT;
 
+import ru.rmades.rest.ODT.Game.Game;
+
 import java.util.ArrayList;
 
 /**
@@ -29,5 +31,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean newGame(){
+        return true;
     }
 }

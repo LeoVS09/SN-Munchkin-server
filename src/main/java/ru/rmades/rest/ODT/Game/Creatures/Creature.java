@@ -1,11 +1,13 @@
-package ru.rmades.rest.ODT;
+package ru.rmades.rest.ODT.Game.Creatures;
+
+import ru.rmades.rest.ODT.Game.Baffs.Baff;
 
 import java.util.ArrayList;
 
 /**
  * Created by Администратор on 14.08.2016.
  */
-abstract class Creature {
+public abstract class Creature {
     private Color           color;
     private short           level;
     private short           x;

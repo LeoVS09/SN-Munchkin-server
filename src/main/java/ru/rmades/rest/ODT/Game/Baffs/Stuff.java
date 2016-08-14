@@ -1,4 +1,4 @@
-package ru.rmades.rest.ODT;
+package ru.rmades.rest.ODT.Game.Baffs;
 
 import java.awt.*;
 

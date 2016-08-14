@@ -1,4 +1,6 @@
-package ru.rmades.rest.ODT;
+package ru.rmades.rest.ODT.Game.Map;
+
+import ru.rmades.rest.ODT.Game.Baffs.Baff;
 
 import java.awt.*;
 import java.util.ArrayList;
