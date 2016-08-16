@@ -7,6 +7,8 @@ public class Game {
     private String name;
     private String password;
 
+    public Game(){}
+
     public Game(String name, String password) {
         this.name = name;
         this.password = password;
