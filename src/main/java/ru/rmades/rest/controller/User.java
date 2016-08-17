@@ -3,8 +3,24 @@ package ru.rmades.rest.controller;
 /**
  * Created by Администратор on 15.08.2016.
  */
+
+import com.sun.javafx.beans.IDProperty;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="User")
 public class User {
+    @Id
+    @Column(name="id")
+    private int id;
+    @Column(name="login")
     private String login;
+    @Column(name="password")
     private String password;
 
     public User(){}
@@ -28,5 +44,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
