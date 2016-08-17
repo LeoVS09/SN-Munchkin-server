@@ -3,13 +3,13 @@ package ru.rmades.rest.controller;
 /**
  * Created by Администратор on 15.08.2016.
  */
-public class Game {
+public class GameForTransaction {
     private String name;
     private String password;
 
-    public Game(){}
+    public GameForTransaction(){}
 
-    public Game(String name, String password) {
+    public GameForTransaction(String name, String password) {
         this.name = name;
         this.password = password;
     }

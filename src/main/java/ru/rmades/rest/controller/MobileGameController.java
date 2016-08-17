@@ -19,7 +19,7 @@ public class MobileGameController {
     private static final Logger log = LoggerFactory.getLogger(MobileGameController.class);
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
-    public ResponseEntity<String> gameCreate(@RequestHeader HttpHeaders headers, @RequestBody Game game)throws Exception{
+    public ResponseEntity<String> gameCreate(@RequestHeader HttpHeaders headers, @RequestBody GameForTransaction game)throws Exception{
         if(headers.get("Authorization").equals("lololol")) return new ResponseEntity<String>("", HttpStatus.BAD_REQUEST);
         long id = 101;
         ObjectMapper mapper = new ObjectMapper();
