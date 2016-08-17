@@ -4,20 +4,14 @@ package ru.rmades.rest;
  * Created by Администратор on 17.08.2016.
  */
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Useers")
+@Table(name = "Users")
 public class User {
     @Id
-    @GeneratedValue(strrategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotNull

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 @RestController
 public class HomeController {
 
-    private static final Logger log = LoggerFactory.getLogger(MobileUserController.class);
+//    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     private UserDAO userDao;
@@ -32,11 +32,11 @@ public class HomeController {
             userDao.save(user);
         }catch (Exception e){
             text = "Exception: " + e.toString();
-            log.info(text);
+//            log.info(text);
             return text;
         }
         text = "Save user";
-        log.info(text);
+//        log.info(text);
         return text;
     }
 
@@ -48,11 +48,11 @@ public class HomeController {
             user = userDao.findByLogin(userLogin);
         }catch (Exception e){
             text = "Exception: " + e.toString();
-            log.info(text);
+//            log.info(text);
             return text;
         }
         text = "User: " + user.getLogin() + " --- " + user.getPassword();
-        log.info(text);
+//        log.info(text);
         return text;
     }
 
