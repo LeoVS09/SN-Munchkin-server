@@ -8,17 +8,23 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "UsersTable")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotNull
+    @Column(unique=true)
     private String login;
 
     @NotNull
     private String password;
+
+    @Override
+    public String toString(){
+        return getId() + "::" + getLogin() + ": " + getPassword();
+    }
 
     public User(){}
 

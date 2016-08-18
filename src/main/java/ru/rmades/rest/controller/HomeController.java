@@ -4,22 +4,22 @@ package ru.rmades.rest.controller;
  * Created by Администратор on 17.08.2016.
  */
 
+
+import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import ru.rmades.rest.User;
 import ru.rmades.rest.UserDAO;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 @RestController
 public class HomeController {
 
 //    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+
+//    public String lol(){
+//        return "lol";
+//    }
 
     @Autowired
     private UserDAO userDao;
@@ -27,7 +27,7 @@ public class HomeController {
     @RequestMapping("/create")
     public String create(){
         String text;
-        User user = new User("Trol", "lol");
+        User user = new User("Troler", "loler");
         try {
             userDao.save(user);
         }catch (Exception e){

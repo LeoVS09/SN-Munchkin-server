@@ -12,7 +12,20 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 public class SnMunchkinServerApplication {
 
+//	@Autowired
+//	UserDAO userDAO;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SnMunchkinServerApplication.class, args);
 	}
+
+//	@Autowired
+//	DBLoader dbLoader;
+//
+//	@PostConstruct
+//	void seeTheDB(){
+//		for(User user: userDAO.findAll()){
+//			System.out.println(user.toString());
+//		}
+//	}
 }
