@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class UserForDB {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -26,13 +26,13 @@ public class User {
         return getId() + "::" + getLogin() + ": " + getPassword();
     }
 
-    public User(){}
+    public UserForDB(){}
 
-    public User(long id){
+    public UserForDB(long id){
         this.id = id;
     }
 
-    public User(String login,String password){
+    public UserForDB(String login, String password){
         this.login = login;
         this.password = password;
     }

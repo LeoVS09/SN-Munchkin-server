@@ -36,4 +36,8 @@ public class UserForTransaction {
         this.password = password;
     }
 
+    public boolean isEmpty(){
+        return login.isEmpty() || password.isEmpty();
+    }
+
 }

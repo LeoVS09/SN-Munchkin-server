@@ -5,6 +5,9 @@ package ru.rmades.rest.controller;
  */
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +20,12 @@ import ru.rmades.rest.UserDAOWrapper;
 @RestController
 public class HomeController {
 
-//    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-//    public String lol(){
-//        return "lol";
-//    }
+    @RequestMapping
+    public String lol(){
+        return "lol";
+    }
 
 //    @Autowired
 //    private UserDAO userDao;
@@ -51,10 +55,12 @@ public class HomeController {
         String text;
         try{
             UserForTransaction user = new UserForTransaction(userLogin,userPassword);
-            return userDAO.isHave(user)?"true":"false";
+            text = userDAO.isHave(user)?"true":"false";
+            log.info(text);
+            return text;
         }catch (Exception e){
             text = "Exception: " + e.toString();
-//            log.info(text);
+            log.info(text);
             return text;
         }
 //        text = "User: " + user.getLogin() + " --- " + user.getPassword();

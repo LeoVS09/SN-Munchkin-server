@@ -17,13 +17,15 @@ public class UserDAOWrapper {
     public UserDAOWrapper(){}
 
     public void save(UserForTransaction user)throws Exception{
-        User userForSave = new User(user.getLogin(),user.getPassword());
+        if(user.isEmpty())throw new Exception("User login or password is empty");
+        UserForDB userForSave = new UserForDB(user.getLogin(),user.getPassword());
         userDao.save(userForSave);
     }
 
     public boolean isHave(UserForTransaction user){
         try {
-            User userInBase = userDao.findByLogin(user.getLogin());
+            if(user.isEmpty())throw new Exception("User login or password is empty");
+            UserForDB userInBase = userDao.findByLogin(user.getLogin());
             return user.getPassword().equals(userInBase.getPassword());
         }catch (Exception e){
             return false;

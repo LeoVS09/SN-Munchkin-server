@@ -20,12 +20,14 @@ public class DBLoader {
 
     @PostConstruct
     private void initDatabase(){
-        User user = new User("Trol","lol");
+        UserForDB user = new UserForDB("Trol","lol");
         try {
             userDAO.save(user);
         }catch(Exception e){
             System.out.println("Can't save user:"+ user.getLogin() +"\n" + e.getMessage());
         }
-
+        for(UserForDB dbuser: userDAO.findAll()) {
+            System.out.println(dbuser.toString());
+        }
     }
 }
