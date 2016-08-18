@@ -5,12 +5,14 @@ package ru.rmades.rest.controller;
  */
 
 
-import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.rmades.rest.UserDAOWrapper;
 
-import ru.rmades.rest.User;
-import ru.rmades.rest.UserDAO;
+//import ru.rmades.rest.User;
+//import ru.rmades.rest.UserDAO;
 
 @RestController
 public class HomeController {
@@ -21,39 +23,43 @@ public class HomeController {
 //        return "lol";
 //    }
 
+//    @Autowired
+//    private UserDAO userDao;
+//
+//    @RequestMapping("/create")
+//    public String create(){
+//        String text;
+//        User user = new User("Troler", "loler");
+//        try {
+//            userDao.save(user);
+//        }catch (Exception e){
+//            text = "Exception: " + e.toString();
+////            log.info(text);
+//            return text;
+//        }
+//        text = "Save user";
+////        log.info(text);
+//        return text;
+//    }
+
     @Autowired
-    private UserDAO userDao;
+    private UserDAOWrapper userDAO;
 
-    @RequestMapping("/create")
-    public String create(){
-        String text;
-        User user = new User("Troler", "loler");
-        try {
-            userDao.save(user);
-        }catch (Exception e){
-            text = "Exception: " + e.toString();
-//            log.info(text);
-            return text;
-        }
-        text = "Save user";
-//        log.info(text);
-        return text;
-    }
+    @RequestMapping("/get-user/{userLogin}/{userPassword}")
+    public String getByLogin(@PathVariable String userLogin, @PathVariable String userPassword){
 
-    @RequestMapping("/get-user/{userLogin}")
-    public String getByLogin(@PathVariable String userLogin){
-        User user;
         String text;
         try{
-            user = userDao.findByLogin(userLogin);
+            UserForTransaction user = new UserForTransaction(userLogin,userPassword);
+            return userDAO.isHave(user)?"true":"false";
         }catch (Exception e){
             text = "Exception: " + e.toString();
 //            log.info(text);
             return text;
         }
-        text = "User: " + user.getLogin() + " --- " + user.getPassword();
+//        text = "User: " + user.getLogin() + " --- " + user.getPassword();
 //        log.info(text);
-        return text;
+//        return text;
     }
 
 }
