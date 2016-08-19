@@ -1,7 +1,8 @@
-package ru.rmades.rest;
+package ru.rmades.rest.ODT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.rmades.rest.ODT.UserDAO;
 
 import javax.annotation.PostConstruct;
 
@@ -20,13 +21,13 @@ public class DBLoader {
 
     @PostConstruct
     private void initDatabase(){
-        UserForDB user = new UserForDB("Trol","lol");
+        User user = new User("Trol","lol");
         try {
             userDAO.save(user);
         }catch(Exception e){
             System.out.println("Can't save user:"+ user.getLogin() +"\n" + e.getMessage());
         }
-        for(UserForDB dbuser: userDAO.findAll()) {
+        for(User dbuser: userDAO.findAll()) {
             System.out.println(dbuser.toString());
         }
     }
