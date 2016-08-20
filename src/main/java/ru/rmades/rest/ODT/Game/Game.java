@@ -4,7 +4,7 @@ import ru.rmades.rest.ODT.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Администратор on 14.08.2016.
@@ -16,7 +16,7 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique=true)
-    private long game_id;
+    private long id;
 
     @NotNull
     @Column(unique=true)
@@ -28,14 +28,15 @@ public class Game {
     @NotNull
     private boolean   open;
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="games")
-    private Set<User> users;
+    @OneToMany(mappedBy="game")
+    //@OrderBy("nowPlayingGame")
+    private List<User> users;
 
-    public Set<User> getUsers(){
+    public List<User> getUsers(){
         return users;
     }
 
-    public void setUsers(Set<User> users){
+    public void setUsers(List<User> users){
         this.users = users;
     }
     //private ArrayList<User>   users;
@@ -45,19 +46,24 @@ public class Game {
 
     public Game(){}
 
-    public Game(long id){this.game_id = id;}
+    public Game(long id){this.id = id;}
 
     public Game(String name,String password){
         this.name = name;
         this.password = password;
     }
+    public Game(String name,String password,boolean open){
+        this.name = name;
+        this.password = password;
+        this.open = open;
+    }
 
     public long getId() {
-        return game_id;
+        return id;
     }
 
     public void setId(long id) {
-        this.game_id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -80,6 +86,17 @@ public class Game {
         this.open = open;
     }
 
+    public boolean isOpen(){
+        return open;
+    }
+
+    @Override
+    public String toString(){
+        return id + "::" + name + ": " + password + " - Open: " + open;
+    }
+
+
+
     //    public Game(ArrayList<User>  users, boolean open) {
 //        this.users = users;
 //        this.open = open;
@@ -98,8 +115,6 @@ public class Game {
 //        //cards.add(new Card());
 //        return cards.get(cards.size()-1);
 //    }
-    boolean isOpen(){
-        return open;
-    }
+
 
 }

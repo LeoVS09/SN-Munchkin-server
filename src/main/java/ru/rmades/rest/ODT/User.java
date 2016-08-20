@@ -4,7 +4,6 @@ import ru.rmades.rest.ODT.Game.Game;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 /**
  * Created by Администратор on 14.08.2016.
@@ -17,7 +16,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique=true)
-    private long user_id;
+    private long id;
 
     @NotNull
     @Column(unique=true)
@@ -26,22 +25,25 @@ public class User {
     @NotNull
     private String password;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="users_games", joinColumns=@JoinColumn(referencedColumnName="user_id")
-            , inverseJoinColumns=@JoinColumn(referencedColumnName="game_id"))
-    private Set<Game> games;
+    private int pastGames;
 
-    public Set<Game> getGames(){
-        return games;
+    private int victories;
+
+
+    @ManyToOne
+    private Game game;
+
+    public Game getGame(){
+        return game;
     }
-    public void setGames(Set<Game> games){
-        this.games = games;
+    public void setGame(Game game){
+        this.game = game;
     }
 
     public User(){}
 
     public User(long id){
-        this.user_id = id;
+        this.id = id;
     }
 
     public User(String login, String password){
@@ -49,12 +51,14 @@ public class User {
         this.password = password;
     }
 
+
+
     public long getId() {
-        return user_id;
+        return id;
     }
 
     public void setId(long id) {
-        this.user_id = id;
+        this.id = id;
     }
 
     public String getLogin() {
@@ -71,6 +75,27 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getPastGames() {
+        return pastGames;
+    }
+
+    public int getVictories() {
+        return victories;
+    }
+
+    public int getLosses(){
+        return pastGames - victories;
+    }
+
+    public void addVictory() {
+        pastGames++;
+        victories++;
+    }
+
+    public void addLoss(){
+        pastGames++;
     }
 
     @Override

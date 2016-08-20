@@ -22,6 +22,10 @@ public class UserDAOWrapper {
         userDao.save(userForSave);
     }
 
+    public void save(User user) throws Exception{
+        userDao.save(user);
+    }
+
     public boolean isHave(UserForTransaction user){
         try {
             if(user.isEmpty())throw new Exception("User login or password is empty");
@@ -30,5 +34,9 @@ public class UserDAOWrapper {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public User findByLogin(String login) throws Exception{
+        return userDao.findByLogin(login);
     }
 }
