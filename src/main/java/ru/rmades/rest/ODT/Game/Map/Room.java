@@ -1,21 +1,25 @@
 package ru.rmades.rest.ODT.Game.Map;
 
-import ru.rmades.rest.ODT.Game.Baffs.Baff;
-import ru.rmades.rest.ODT.Game.Creatures.*;
+import ru.rmades.rest.ODT.Game.Creatures.Creature;
 
-import java.awt.*;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Администратор on 14.08.2016.
  */
-public class Room extends Wall{
-    ArrayList<Creature> creatures;
 
-    public Room(Image image,ArrayList<Baff> baffs) {
-        super(image,baffs);
-    }
-    public void addIn(Creature creature){
-        creatures.add(creature);
-    }
+@Entity
+@Table(name="rooms")
+public class Room extends Wall{
+
+    @OneToMany
+    @JoinTable(name="Room_Creatures",
+            joinColumns = @JoinColumn(name="Room_id"),
+            inverseJoinColumns = @JoinColumn(name="Creature_id"))
+    private List<Creature> creatures;
+
+    public Room(){super();}
+
+    public Room(String image){super(image);}
 }

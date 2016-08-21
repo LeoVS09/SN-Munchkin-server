@@ -1,5 +1,8 @@
 package ru.rmades.rest.ODT.Game;
 
+import ru.rmades.rest.ODT.Game.Baffs.Card;
+import ru.rmades.rest.ODT.Game.Creatures.Hero;
+import ru.rmades.rest.ODT.Game.Map.Map;
 import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.controller.mobile.GameForTransaction;
 
@@ -30,10 +33,13 @@ public class Game extends GameForTransaction{
     public void setUsers(List<UserData> users){
         this.users = users;
     }
-    //private ArrayList<User>   users;
-    //private ArrayList<Hero>   heroes;
-    //private Map               map;
-    //private ArrayList<Card>   cards;
+
+    @OneToMany
+    private List<Hero>   heroes;
+    @OneToOne
+    private Map map;
+    @OneToMany
+    private List<Card>   cards;
 
     public Game(){super();}
 

@@ -1,5 +1,6 @@
 package ru.rmades.rest.ODT;
 
+import ru.rmades.rest.ODT.Game.Creatures.Hero;
 import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.controller.mobile.UserForTransaction;
 
@@ -22,6 +23,8 @@ public class UserData extends UserForTransaction{
 
     private int victories;
 
+    @OneToOne
+    private Hero hero;
 
     @ManyToOne
     private Game game;
@@ -31,6 +34,14 @@ public class UserData extends UserForTransaction{
     }
     public void setGame(Game game){
         this.game = game;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
     }
 
     public UserData(){super();}

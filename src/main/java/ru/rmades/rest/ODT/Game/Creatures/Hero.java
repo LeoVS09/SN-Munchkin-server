@@ -1,46 +1,48 @@
 package ru.rmades.rest.ODT.Game.Creatures;
 
-import ru.rmades.rest.ODT.Game.Baffs.Baff;
 import ru.rmades.rest.ODT.Game.Baffs.ClasS;
 import ru.rmades.rest.ODT.Game.Baffs.Race;
 import ru.rmades.rest.ODT.Game.Baffs.Stuff;
-import ru.rmades.rest.ODT.UserData;
 
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Администратор on 14.08.2016.
  */
+
+@Entity
+@Table(name="Heroes")
 public class Hero extends Creature{
-    private UserData user;
+
     private short steps;
     private short health;
-    private ArrayList<Stuff> stuffs;
-    private ArrayList<Stuff> inHand;
-    private ArrayList<Race>  races;
-    private ArrayList<ClasS> classes;
 
-    public Hero( Color color, ArrayList<Baff>  baffs){
-        super((short)1,(short)0,(short)0,color,baffs);
-    }
+    @OneToMany
+    @JoinTable(name="Heroes_Stuffs",
+            joinColumns = @JoinColumn(name="Heroes_id"),
+            inverseJoinColumns = @JoinColumn(name="Stuffs_id"))
+    private List<Stuff> stuffs;
+    @OneToMany
+    @JoinTable(name="Heroes_inHand",
+            joinColumns = @JoinColumn(name="Heroes_id"),
+            inverseJoinColumns = @JoinColumn(name="inHand_id"))
+    private List<Stuff> inHand;
+    @OneToMany
+    @JoinTable(name="Heroes_races",
+            joinColumns = @JoinColumn(name="Heroes_id"),
+            inverseJoinColumns = @JoinColumn(name="races_id"))
+    private List<Race> races;
+    @OneToMany
+    @JoinTable(name="Heroes_Classes",
+            joinColumns = @JoinColumn(name="Heroes_id"),
+            inverseJoinColumns = @JoinColumn(name="Classes_id"))
+    private List<ClasS> classes;
 
-    public void addStuff(Stuff stuff){stuffs.add(stuff);}
+    public Hero(){}
+    public Hero(short level,short x, short y, Color color){
+        super(level,x,y,color);
 
-    public void addInHand(Stuff stuff){
-        stuffs.remove(stuff);
-        inHand.add(stuff);
-    }
-
-    public void addRace(Race race){races.add(race);}
-
-    public void addClass(ClasS cl){classes.add(cl);}
-
-    public UserData getUser() {
-        return user;
-    }
-
-    public void setUser(UserData user) {
-        this.user = user;
     }
 
     public short getSteps() {
@@ -57,5 +59,37 @@ public class Hero extends Creature{
 
     public void setHealth(short health) {
         this.health = health;
+    }
+
+    public List<Stuff> getStuffs() {
+        return stuffs;
+    }
+
+    public void setStuffs(List<Stuff> stuffs) {
+        this.stuffs = stuffs;
+    }
+
+    public List<Stuff> getInHand() {
+        return inHand;
+    }
+
+    public void setInHand(List<Stuff> inHand) {
+        this.inHand = inHand;
+    }
+
+    public List<Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(List<Race> races) {
+        this.races = races;
+    }
+
+    public List<ClasS> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<ClasS> classes) {
+        this.classes = classes;
     }
 }
