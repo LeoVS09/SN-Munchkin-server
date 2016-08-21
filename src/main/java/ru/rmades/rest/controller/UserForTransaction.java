@@ -15,6 +15,10 @@ public class UserForTransaction {
 
     public UserForTransaction(){}
 
+    public UserForTransaction(String login){
+        this.login = login;
+    }
+
     public UserForTransaction(String login, String password) {
         this.login = login;
         this.password = password;

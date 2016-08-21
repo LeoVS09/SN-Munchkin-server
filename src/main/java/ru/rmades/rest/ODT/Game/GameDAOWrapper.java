@@ -70,4 +70,8 @@ public class GameDAOWrapper {
     public Game findByName(String name){
         return gameDao.findByName(name);
     }
+
+    public Iterable<Game> findAll(){
+        return gameDao.findAll();
+    }
 }

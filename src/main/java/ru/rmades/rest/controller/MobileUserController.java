@@ -6,6 +6,8 @@ package ru.rmades.rest.controller;
 
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,14 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.UserDAOWrapper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @RestController
 @RequestMapping("/mobile/user")
 public class MobileUserController {
     private static final Logger log = LoggerFactory.getLogger(MobileUserController.class);
-
+    private static final Encoder encod = new Encoder();
     private static final JSONWrapper json = new JSONWrapper();
 
     @Autowired
@@ -50,9 +49,12 @@ public class MobileUserController {
     public ResponseEntity<String> LoginIn(@RequestHeader HttpHeaders headers, @RequestBody UserForTransaction user){
         log.info("------->" + user.getLogin() + ": " + user.getPassword());
         String response = "lololol";
-        response = json.toString(response);
+
         try {
-            if (userDAO.isHave(user)){
+            long id = userDAO.getIdisHave(user);
+            if (id != 0){
+                response = encod.getTocken(id);
+                response = json.toString(response);
                 log.info("User in base");
                 return new ResponseEntity<String>(response, HttpStatus.OK);
             }
