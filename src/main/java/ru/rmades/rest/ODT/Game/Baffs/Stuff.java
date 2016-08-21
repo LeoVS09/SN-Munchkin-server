@@ -1,17 +1,16 @@
 package ru.rmades.rest.ODT.Game.Baffs;
 
-import java.awt.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by Администратор on 14.08.2016.
  */
-public class Stuff extends Baff{
-    private Image image;
-    public Stuff(short atack,short health,short steps, String text, Image image){
-        super(atack, health, steps, text);
-        this.image = image;
-    }
-    public Image getImage(){
-        return image;
+@Entity
+@Table(name="Stuff")
+public class Stuff extends Card{
+    public Stuff(){}
+    public Stuff(String name,String image, String description){
+        super(name,image,description);
     }
 }

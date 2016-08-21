@@ -1,4 +1,4 @@
-package ru.rmades.rest.controller;
+package ru.rmades.rest.controller.mobile;
 
 /**
  * Created by Администратор on 16.08.2016.
@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.Game.GameDAOWrapper;
-import ru.rmades.rest.ODT.User;
+import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
+import ru.rmades.rest.controller.Encoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class MobileGameController {
             Game gameInBase = gameDao.findByName(game.getName());
             if(gameInBase == null) throw new Exception("Invalid game");
             if(!gameInBase.getPassword().equals(game.getPassword())) throw new Exception("Incorrect password");
-            for(User user: gameInBase.getUsers()){
+            for(UserData user: gameInBase.getUsers()){
                 UserForTransaction userSend = new UserForTransaction(user.getLogin());
                 users.add(userSend);
             }
@@ -81,10 +82,10 @@ public class MobileGameController {
         }
     }
 
-    private User getUser(HttpHeaders headers) throws Exception{
+    private UserData getUser(HttpHeaders headers) throws Exception{
         String token = headers.get("Authorization").get(0);
         if(token == null || token.equals("")) throw new Exception("Invalid token");
-        User user = userDAO.findById(encod.getUserId(token));
+        UserData user = userDAO.findById(encod.getUserId(token));
         if(user == null) throw new Exception("User is not exist");
         return user;
     }

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.Game.GameDAOWrapper;
-import ru.rmades.rest.ODT.User;
+import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
+import ru.rmades.rest.controller.mobile.GameForTransaction;
+import ru.rmades.rest.controller.mobile.UserForTransaction;
 
 //import ru.rmades.rest.User;
 //import ru.rmades.rest.UserDAO;
@@ -86,12 +88,13 @@ public class HomeController {
         return text;
     }
 
-    @RequestMapping("/getUser/{login}")
+    @RequestMapping("/get/user/{login}")
     public String getUser(@PathVariable String login){
         String text = "";
         try{
-            User user = userDao.findByLogin(login);
-            text = user.toString() + "\nGame:\n" + user.getGame().toString();
+            UserData user = userDao.findByLogin(login);
+            text = user.toString();
+            if(user.getGame() != null) text += "\nGame:\n" + user.getGame().toString();
         }catch (Exception e){
             text = "Error: " + e.toString();
         }
@@ -99,13 +102,13 @@ public class HomeController {
         return text;
     }
 
-    @RequestMapping("/getGame/{name}")
+    @RequestMapping("/get/game/{name}")
     public String getGame(@PathVariable String name){
         String text = "";
         try{
             Game game = gameDao.findByName(name);
             text = game.toString() + "\nUsers:\n";
-            for(User user: game.getUsers()){
+            for(UserData user: game.getUsers()){
                 text += user.toString() + "\n";
             }
         }catch (Exception e){

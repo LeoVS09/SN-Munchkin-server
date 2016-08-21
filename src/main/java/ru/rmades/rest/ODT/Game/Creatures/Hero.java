@@ -4,7 +4,7 @@ import ru.rmades.rest.ODT.Game.Baffs.Baff;
 import ru.rmades.rest.ODT.Game.Baffs.ClasS;
 import ru.rmades.rest.ODT.Game.Baffs.Race;
 import ru.rmades.rest.ODT.Game.Baffs.Stuff;
-import ru.rmades.rest.ODT.User;
+import ru.rmades.rest.ODT.UserData;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Администратор on 14.08.2016.
  */
 public class Hero extends Creature{
-    private User user;
+    private UserData user;
     private short steps;
     private short health;
     private ArrayList<Stuff> stuffs;
@@ -35,11 +35,11 @@ public class Hero extends Creature{
 
     public void addClass(ClasS cl){classes.add(cl);}
 
-    public User getUser() {
+    public UserData getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserData user) {
         this.user = user;
     }
 

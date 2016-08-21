@@ -1,10 +1,17 @@
 package ru.rmades.rest.ODT.Game.Baffs;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Created by Администратор on 14.08.2016.
  */
-public class ClasS extends Race {
-    public ClasS(short atack,short health,short steps, String text,String name){
-        super(atack, health, steps, text, name);
+
+@Entity
+@Table(name="classes")
+public class ClasS extends Card {
+    public ClasS(){};
+    public ClasS(String name,String image,String description){
+        super(name,image,description);
     }
 }

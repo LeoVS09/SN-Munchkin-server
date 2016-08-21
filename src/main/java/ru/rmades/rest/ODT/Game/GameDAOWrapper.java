@@ -2,10 +2,9 @@ package ru.rmades.rest.ODT.Game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.rmades.rest.ODT.User;
-import ru.rmades.rest.ODT.UserDAO;
+import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
-import ru.rmades.rest.controller.GameForTransaction;
+import ru.rmades.rest.controller.mobile.GameForTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +25,10 @@ public class GameDAOWrapper {
 
     public GameDAOWrapper(){}
 
-    public void save(GameForTransaction game,User user) throws Exception{
+    public void save(GameForTransaction game,UserData user) throws Exception{
         if(game.isEmpty()) throw new Exception("Name is empty");
         Game gameForBD = new Game(game.getName(),game.getPassword(),game.isOpen());
-        List<User> playng = new ArrayList<User>();
+        List<UserData> playng = new ArrayList<UserData>();
         playng.add(user);
         gameForBD.setUsers(playng);
         user.setGame(gameForBD);
@@ -41,7 +40,7 @@ public class GameDAOWrapper {
         save(game,userDao.findByLogin(login));
     }
 
-    public void addUser(String nameOfGame,User user,String password)throws Exception{
+    public void addUser(String nameOfGame, UserData user, String password)throws Exception{
         Game game = gameDao.findByName(nameOfGame);
         if(!game.isOpen()) throw new Exception("Game is close");
         if(!game.getPassword().equals(password)) throw new Exception("Password is incorrect");
@@ -51,7 +50,7 @@ public class GameDAOWrapper {
         userDao.save(user);
     }
 
-    public void addUser(String nameOfGame,User user)throws Exception{
+    public void addUser(String nameOfGame,UserData user)throws Exception{
         addUser(nameOfGame, user,"");
     }
 

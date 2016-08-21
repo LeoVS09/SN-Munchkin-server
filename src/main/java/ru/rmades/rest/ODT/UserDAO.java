@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.data.repository.CrudRepository;
 
 @Transactional
-public interface UserDAO extends CrudRepository<User, Long>{
+public interface UserDAO extends CrudRepository<UserData, Long>{
 
-    public User findByLogin(String login);
+    public UserData findByLogin(String login);
 
-    public User findById(Long id);
+    public UserData findById(Long id);
 }

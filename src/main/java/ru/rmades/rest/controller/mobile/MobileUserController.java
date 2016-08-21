@@ -1,4 +1,4 @@
-package ru.rmades.rest.controller;
+package ru.rmades.rest.controller.mobile;
 
 /**
  * Created by Администратор on 15.08.2016.
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.UserDAOWrapper;
+import ru.rmades.rest.controller.Encoder;
 
 @RestController
 @RequestMapping("/mobile/user")

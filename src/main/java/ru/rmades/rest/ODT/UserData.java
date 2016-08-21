@@ -1,9 +1,9 @@
 package ru.rmades.rest.ODT;
 
 import ru.rmades.rest.ODT.Game.Game;
+import ru.rmades.rest.controller.mobile.UserForTransaction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by Администратор on 14.08.2016.
@@ -12,18 +12,11 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class UserData extends UserForTransaction{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique=true)
     private long id;
-
-    @NotNull
-    @Column(unique=true)
-    private String login;
-
-    @NotNull
-    private String password;
 
     private int pastGames;
 
@@ -40,17 +33,15 @@ public class User {
         this.game = game;
     }
 
-    public User(){}
+    public UserData(){super();}
 
-    public User(long id){
+    public UserData(long id){
         this.id = id;
     }
 
-    public User(String login, String password){
-        this.login = login;
-        this.password = password;
+    public UserData(String login, String password){
+        super(login,password);
     }
-
 
 
     public long getId() {
@@ -59,22 +50,6 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getPastGames() {

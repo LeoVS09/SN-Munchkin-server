@@ -1,14 +1,25 @@
-package ru.rmades.rest.controller;
+package ru.rmades.rest.controller.mobile;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Администратор on 15.08.2016.
  */
+
+@MappedSuperclass
 public class GameForTransaction {
 
+    @NotNull
+    @Column(unique=true)
     private String name;
-    private String password;
-    private boolean open;
 
+    @NotNull
+    private String password;
+
+    @NotNull
+    private boolean open;
 
 
     public GameForTransaction(){}
