@@ -5,7 +5,6 @@ package ru.rmades.rest.controller.mobile;
  */
 
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +12,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.rmades.rest.FirebaseWrapper;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.UserDAOWrapper;
-import ru.rmades.rest.controller.Encoder;
+import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 @RestController
 @RequestMapping("/mobile/user")
 public class MobileUserController {
     private static final Logger log = LoggerFactory.getLogger(MobileUserController.class);
-    private static final Encoder encod = new Encoder();
     private static final JSONWrapper json = new JSONWrapper();
+    private static final FirebaseWrapper firebase = new FirebaseWrapper();
 
     @Autowired
     private UserDAOWrapper userDAO;
@@ -53,9 +53,11 @@ public class MobileUserController {
         String response = "lololol";
 
         try {
-            long id = userDAO.getIdisHave(user);
-            if (id != 0){
-                response = encod.getTocken(id);
+            UserData userData = userDAO.getIfHave(user);
+            if (userData != null){
+                response = firebase.getFirebaseToken(Long.toString(userData.getId()));
+                userData.setToken(response);
+                userDAO.save(userData);
                 response = json.toString(response);
                 log.info("User in base");
                 return new ResponseEntity<String>(response, HttpStatus.OK);

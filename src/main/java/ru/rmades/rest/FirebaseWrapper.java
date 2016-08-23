@@ -7,7 +7,9 @@ package ru.rmades.rest;
 
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.*;
 import org.apache.commons.io.IOUtils;
+import sun.security.pkcs11.P11Util;
 
 import java.io.FileInputStream;
 
@@ -16,7 +18,8 @@ import java.io.FileInputStream;
 public class FirebaseWrapper {
 
     private FirebaseOptions options;
-    public FirebaseWrapper(){
+    public FirebaseWrapper(){}
+    public void run(){
         try {
             options = new FirebaseOptions.Builder()
                     //.setServiceAccount(new FileInputStream("C:\\Users\\Администратор\\IdeaProjects\\SN-Munchkin-server\\src\\main\\java\\ru\\rmades\\rest\\SN-Munchkin-d4644b794e33.json"))
@@ -28,6 +31,21 @@ public class FirebaseWrapper {
         }catch (Exception e){
             System.out.println("Error: " + e.toString());
         }
+    }
+    public String getFirebaseToken(String token){
+        return FirebaseAuth.getInstance().createCustomToken(token);
+    }
+    public String getDataBaseToken(String token){
+
+//        FirebaseAuth.getInstance().verifyIdToken(idToken)
+//                .addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
+//                    @Override
+//                    public void onSuccess(FirebaseToken decodedToken) {
+//                        String uid = decodedToken.getUid();
+//                        // ...
+//                    }
+//                });
+        return token;
     }
     private static final String serviceAcc = "{\n" +
             "  \"type\": \"service_account\",\n" +

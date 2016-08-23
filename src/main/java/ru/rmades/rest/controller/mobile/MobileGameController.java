@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.Game.GameDAOWrapper;
-import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
-import ru.rmades.rest.controller.Encoder;
+import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.controller.mobile.model.GameForTransaction;
 import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
@@ -27,7 +26,6 @@ import java.util.List;
 @RequestMapping("/mobile/game")
 public class MobileGameController {
     private static final Logger log = LoggerFactory.getLogger(MobileGameController.class);
-    private static final Encoder encod = new Encoder();
     private static final JSONWrapper json = new JSONWrapper();
 
     @Autowired
@@ -90,7 +88,7 @@ public class MobileGameController {
     private UserData getUser(HttpHeaders headers) throws Exception{
         String token = headers.get("Authorization").get(0);
         if(token == null || token.equals("")) throw new Exception("Invalid token");
-        UserData user = userDAO.findById(encod.getUserId(token));
+        UserData user = userDAO.findByToken(token);
         if(user == null) throw new Exception("User is not exist");
         return user;
     }

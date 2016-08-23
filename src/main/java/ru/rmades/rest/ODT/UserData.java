@@ -19,6 +19,9 @@ public class UserData extends UserForTransaction{
     @Column(unique=true)
     private long id;
 
+    @Column(unique=true)
+    private String token;
+
     private int pastGames;
 
     private int victories;
@@ -82,6 +85,14 @@ public class UserData extends UserForTransaction{
 
     public void addLoss(){
         pastGames++;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

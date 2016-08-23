@@ -36,14 +36,12 @@ public class UserDAOWrapper {
         }
     }
 
-    public long getIdisHave(UserForTransaction user){
-        try {
+    public UserData getIfHave(UserForTransaction user) throws  Exception{
+
             if(user.isEmpty())throw new Exception("User login or password is empty");
             UserData userInBase = userDao.findByLogin(user.getLogin());
-            return user.getPassword().equals(userInBase.getPassword()) ? userInBase.getId() : 0;
-        }catch (Exception e){
-            return 0;
-        }
+            return user.getPassword().equals(userInBase.getPassword()) ? userInBase : null;
+
     }
 
     public UserData findByLogin(String login) throws Exception{
@@ -52,5 +50,9 @@ public class UserDAOWrapper {
 
     public UserData findById(long id) throws Exception{
         return userDao.findById(id);
+    }
+
+    public UserData findByToken(String token){
+        return userDao.findByToken(token);
     }
 }

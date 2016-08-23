@@ -22,5 +22,6 @@ public class SnMunchkinServerApplication {
 	@PostConstruct
 	public void createFirebase(){
 		firebase = new FirebaseWrapper();
+		firebase.run();
 	}
 }
