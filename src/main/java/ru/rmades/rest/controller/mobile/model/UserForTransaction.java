@@ -1,4 +1,4 @@
-package ru.rmades.rest.controller.mobile;
+package ru.rmades.rest.controller.mobile.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

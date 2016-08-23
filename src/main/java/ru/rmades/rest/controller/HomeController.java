@@ -15,8 +15,8 @@ import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.Game.GameDAOWrapper;
 import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
-import ru.rmades.rest.controller.mobile.GameForTransaction;
-import ru.rmades.rest.controller.mobile.UserForTransaction;
+import ru.rmades.rest.controller.mobile.model.GameForTransaction;
+import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 //import ru.rmades.rest.User;
 //import ru.rmades.rest.UserDAO;

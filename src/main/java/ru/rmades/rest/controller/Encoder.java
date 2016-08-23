@@ -17,7 +17,7 @@ public class Encoder {
     }
 
     public long getUserId(String token){
-        token = token.substring(6);
+        token = token.substring(key.length());
         return Long.parseLong(token,10);
     }
 }

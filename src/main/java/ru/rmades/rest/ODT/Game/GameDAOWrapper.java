@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
-import ru.rmades.rest.controller.mobile.GameForTransaction;
+import ru.rmades.rest.controller.mobile.model.GameForTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,16 @@ public class GameDAOWrapper {
     private UserDAOWrapper userDao;
 
     public GameDAOWrapper(){}
+
+    public void save(Game game) throws Exception{
+        gameDao.save(game);
+    }
+    public void addUser(Game game,UserData user)throws Exception{
+        game.getUsers().add(user);
+        user.setGame(game);
+        userDao.save(user);
+        save(game);
+    }
 
     public void save(GameForTransaction game,UserData user) throws Exception{
         if(game.isEmpty()) throw new Exception("Name is empty");

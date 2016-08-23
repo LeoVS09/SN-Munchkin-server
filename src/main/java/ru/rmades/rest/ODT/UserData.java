@@ -2,7 +2,7 @@ package ru.rmades.rest.ODT;
 
 import ru.rmades.rest.ODT.Game.Creatures.Hero;
 import ru.rmades.rest.ODT.Game.Game;
-import ru.rmades.rest.controller.mobile.UserForTransaction;
+import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 import javax.persistence.*;
 

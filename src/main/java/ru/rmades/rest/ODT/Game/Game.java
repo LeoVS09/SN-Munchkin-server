@@ -4,7 +4,7 @@ import ru.rmades.rest.ODT.Game.Baffs.Card;
 import ru.rmades.rest.ODT.Game.Creatures.Hero;
 import ru.rmades.rest.ODT.Game.Map.Map;
 import ru.rmades.rest.ODT.UserData;
-import ru.rmades.rest.controller.mobile.GameForTransaction;
+import ru.rmades.rest.controller.mobile.model.GameForTransaction;
 
 import javax.persistence.*;
 import java.util.List;

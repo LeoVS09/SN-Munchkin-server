@@ -17,6 +17,8 @@ import ru.rmades.rest.ODT.Game.GameDAOWrapper;
 import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.ODT.UserDAOWrapper;
 import ru.rmades.rest.controller.Encoder;
+import ru.rmades.rest.controller.mobile.model.GameForTransaction;
+import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,38 +49,41 @@ public class MobileGameController {
     }
 
     @RequestMapping(value="/all-games",method = RequestMethod.GET)
-    public ResponseEntity<List<GameForTransaction>> viewGames(@RequestHeader HttpHeaders headers){
+    public ResponseEntity<GameForTransaction[]> viewGames(@RequestHeader HttpHeaders headers){
 
-            List<GameForTransaction> games = new ArrayList<GameForTransaction>();
+            ArrayList<GameForTransaction> games = new ArrayList<GameForTransaction>();
         try{
             getUser(headers);
             for(Game game: gameDao.findAll()){
                 GameForTransaction gameSend = new GameForTransaction(game.getName(),"",game.isOpen());
                 games.add(gameSend);
             }
-            return ResponseEntity.ok(games);
+            return ResponseEntity.ok(games.toArray(new GameForTransaction[0]));
         }catch (Exception e){
             log.info(e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(games);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(games.toArray(new GameForTransaction[0]));
         }
     }
 
     @RequestMapping(value="/join", method = RequestMethod.POST)
-    public ResponseEntity<List<UserForTransaction>> joinToGame(@RequestHeader HttpHeaders headers,@RequestBody GameForTransaction game){
+    public ResponseEntity<List<UserForTransaction>> joinToGame(@RequestHeader HttpHeaders headers, @RequestBody GameForTransaction game){
         List<UserForTransaction> users = new ArrayList<UserForTransaction>();
         try{
-            getUser(headers);
+            UserData userData = getUser(headers);
             Game gameInBase = gameDao.findByName(game.getName());
             if(gameInBase == null) throw new Exception("Invalid game");
             if(!gameInBase.getPassword().equals(game.getPassword())) throw new Exception("Incorrect password");
             for(UserData user: gameInBase.getUsers()){
+                if(userData == user) throw new Exception("User already is the game");
                 UserForTransaction userSend = new UserForTransaction(user.getLogin());
                 users.add(userSend);
             }
+
+            gameDao.addUser(gameInBase,userData);
             return ResponseEntity.ok(users);
         }catch (Exception e){
             log.info(e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(users);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 

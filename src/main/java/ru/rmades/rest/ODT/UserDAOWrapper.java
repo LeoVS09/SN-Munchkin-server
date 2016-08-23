@@ -2,7 +2,7 @@ package ru.rmades.rest.ODT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.rmades.rest.controller.mobile.UserForTransaction;
+import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 /**
  * Created by Администратор on 18.08.2016.

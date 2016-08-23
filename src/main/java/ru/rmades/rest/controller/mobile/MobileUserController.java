@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.UserDAOWrapper;
 import ru.rmades.rest.controller.Encoder;
+import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 @RestController
 @RequestMapping("/mobile/user")
