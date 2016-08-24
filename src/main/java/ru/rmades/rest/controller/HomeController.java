@@ -65,7 +65,7 @@ public class HomeController {
             log.info(text);
             return text;
         }
-        text = "Game save";
+        text = "game save";
         log.info(text);
         return text;
     }
@@ -94,7 +94,7 @@ public class HomeController {
         try{
             UserData user = userDao.findByLogin(login);
             text = user.toString();
-            if(user.getGame() != null) text += "\nGame:\n" + user.getGame().toString();
+            if(user.getGame() != null) text += "\ngame:\n" + user.getGame().toString();
         }catch (Exception e){
             text = "Error: " + e.toString();
         }

@@ -15,7 +15,7 @@ public class Monster extends Creature{
     String description;
 
     public Monster(){}
-    public Monster(String name, String image, short min, short level,short x, short y, Color color){
+    public Monster(String name, String image, short min, short level,short x, short y, short color){
         super(level,x,y,color);
         this.name = name;
         this.image = image;

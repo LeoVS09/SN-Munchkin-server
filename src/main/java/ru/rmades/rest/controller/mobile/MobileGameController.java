@@ -16,23 +16,30 @@ import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.Game.GameDAOWrapper;
 import ru.rmades.rest.ODT.UserDAOWrapper;
 import ru.rmades.rest.ODT.UserData;
+import ru.rmades.rest.controller.Encoder;
+import ru.rmades.rest.controller.mobile.firebase.message.TalkAll;
 import ru.rmades.rest.controller.mobile.model.GameForTransaction;
 import ru.rmades.rest.controller.mobile.model.UserForTransaction;
+import ru.rmades.rest.game.core.GameCore;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/mobile/game")
 public class MobileGameController {
     private static final Logger log = LoggerFactory.getLogger(MobileGameController.class);
     private static final JSONWrapper json = new JSONWrapper();
-
+    private static final Encoder encode = new Encoder();
     @Autowired
     GameDAOWrapper gameDao;
 
     @Autowired
     private UserDAOWrapper userDAO;
+
+    @Autowired
+    GameCore gameCore;
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
     public ResponseEntity<String> gameCreate(@RequestHeader HttpHeaders headers, @RequestBody GameForTransaction game){
@@ -64,7 +71,7 @@ public class MobileGameController {
     }
 
     @RequestMapping(value="/join", method = RequestMethod.POST)
-    public ResponseEntity<List<UserForTransaction>> joinToGame(@RequestHeader HttpHeaders headers, @RequestBody GameForTransaction game){
+    public ResponseEntity<String> joinToGame(@RequestHeader HttpHeaders headers, @RequestBody GameForTransaction game){
         List<UserForTransaction> users = new ArrayList<UserForTransaction>();
         try{
             UserData userData = getUser(headers);
@@ -78,18 +85,41 @@ public class MobileGameController {
             }
 
             gameDao.addUser(gameInBase,userData);
-            return ResponseEntity.ok(users);
+            users.add(new UserForTransaction(userData.getLogin()));
+            Thread myThread = new Thread(new TalkAll(gameInBase,json.toString(users)));
+            myThread.start();
+            return ResponseEntity.ok("Success");
         }catch (Exception e){
             log.info(e.toString());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.toString());
+        }
+    }
+
+    @RequestMapping(value = "/begin", method = RequestMethod.POST)
+    public ResponseEntity<String> startGame(@RequestHeader HttpHeaders headers){
+        try{
+            UserData userData = getUser(headers);
+            userData.StartGame();
+            userDAO.save(userData);
+            Game gameInBase = userData.getGame();
+            if(!gameDao.isStartGame(gameInBase)) return ResponseEntity.ok("Success");
+
+
+            new Thread(gameCore.begin(gameInBase));
+            return ResponseEntity.ok("Success");
+        }catch (Exception e){
+            log.info(e.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.toString());
         }
     }
 
     private UserData getUser(HttpHeaders headers) throws Exception{
         String token = headers.get("Authorization").get(0);
         if(token == null || token.equals("")) throw new Exception("Invalid token");
-        UserData user = userDAO.findByToken(token);
+        UserData user = userDAO.findById(encode.getUserId(token));
         if(user == null) throw new Exception("User is not exist");
         return user;
     }
+
+
 }

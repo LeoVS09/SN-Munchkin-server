@@ -1,23 +1,27 @@
 package ru.rmades.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Администратор on 19.08.2016.
  */
 public class JSONWrapper {
     private static final ObjectMapper json = new ObjectMapper();
+    private static final Logger log = LoggerFactory.getLogger(JSONWrapper.class);
 
     public JSONWrapper(){}
 
-    public String toString(String text){
-        String unerror = "Unknown error";
+    public <T> String  toString(T object){
+
+        String text = "\"Unknown error\"";
         try{
-            unerror = json.writeValueAsString(unerror);
-            text = json.writeValueAsString(text);
+            text = json.writeValueAsString(object);
             return text;
         }catch (Exception e){
-            return unerror;
+            log.info(e.toString());
+            return text;
         }
     }
 }

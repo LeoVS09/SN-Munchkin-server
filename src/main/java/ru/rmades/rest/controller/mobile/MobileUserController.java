@@ -12,10 +12,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.rmades.rest.FirebaseWrapper;
 import ru.rmades.rest.JSONWrapper;
 import ru.rmades.rest.ODT.UserDAOWrapper;
 import ru.rmades.rest.ODT.UserData;
+import ru.rmades.rest.controller.Encoder;
 import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 
 @RestController
@@ -23,7 +23,7 @@ import ru.rmades.rest.controller.mobile.model.UserForTransaction;
 public class MobileUserController {
     private static final Logger log = LoggerFactory.getLogger(MobileUserController.class);
     private static final JSONWrapper json = new JSONWrapper();
-    private static final FirebaseWrapper firebase = new FirebaseWrapper();
+    private static final Encoder encode = new Encoder();
 
     @Autowired
     private UserDAOWrapper userDAO;
@@ -55,8 +55,8 @@ public class MobileUserController {
         try {
             UserData userData = userDAO.getIfHave(user);
             if (userData != null){
-                response = firebase.getFirebaseToken(Long.toString(userData.getId()));
-                userData.setToken(response);
+                response = encode.getTocken(userData.getId());
+                userData.setToken(user.getToken());
                 userDAO.save(userData);
                 response = json.toString(response);
                 log.info("User in base");

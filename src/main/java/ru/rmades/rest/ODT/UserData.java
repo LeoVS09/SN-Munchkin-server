@@ -19,12 +19,11 @@ public class UserData extends UserForTransaction{
     @Column(unique=true)
     private long id;
 
-    @Column(unique=true)
-    private String token;
-
     private int pastGames;
 
     private int victories;
+
+    private boolean startGame;
 
     @OneToOne
     private Hero hero;
@@ -57,6 +56,17 @@ public class UserData extends UserForTransaction{
         super(login,password);
     }
 
+    public boolean isStartGame() {
+        return startGame;
+    }
+
+    public void StartGame() {
+        this.startGame = true;
+    }
+
+    public void notStartGame(){
+        this.startGame = false;
+    }
 
     public long getId() {
         return id;
@@ -85,14 +95,6 @@ public class UserData extends UserForTransaction{
 
     public void addLoss(){
         pastGames++;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     @Override

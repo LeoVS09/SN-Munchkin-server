@@ -1,6 +1,7 @@
 package ru.rmades.rest.controller.mobile.model;
 
 import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
@@ -17,6 +18,11 @@ public class UserForTransaction {
 
     @NotNull
     private String password;
+
+    @Column(unique=true)
+    @Lob
+    private String token;
+
 
     public UserForTransaction(){}
 
@@ -45,8 +51,24 @@ public class UserForTransaction {
         this.password = password;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public boolean isEmpty(){
         return login.isEmpty() || password.isEmpty();
     }
 
+    @Override
+    public String toString(){
+        String result = "{\n";
+        result += "\"login\": \"" + getLogin() + "\"\n";
+        result += "\"password\": \"" + getPassword() + "\"\n";
+        result += "\"token\": \"" + getToken() + "\"\n";
+        return result;
+    }
 }

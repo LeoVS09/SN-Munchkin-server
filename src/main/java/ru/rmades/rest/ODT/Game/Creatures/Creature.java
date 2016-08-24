@@ -18,15 +18,13 @@ public abstract class Creature {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private long            id;
-    private Color           color;
+    private short           color;
     @NotNull
     private short           level;
     private short           x;
     private short           y;
 
-    public static enum Color{
-        Blue, Red, Green
-    }
+
 
     @OneToMany
     @JoinTable(name="Creatures_Baffs",
@@ -34,9 +32,13 @@ public abstract class Creature {
             inverseJoinColumns = @JoinColumn(name="Baffs_id"))
     private List<Baff> baffs;
 
-    public Creature(){}
+    public Creature(){
+        level = 1;
+        x = 4;
+        y = 4;
+    }
 
-    public Creature(short level,short x, short y, Color color){
+    public Creature(short level,short x, short y, short color){
         this.level = level;
         this.x = x;
         this.y = y;
@@ -51,11 +53,11 @@ public abstract class Creature {
         this.id = id;
     }
 
-    public Color getColor() {
+    public short getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(short color) {
         this.color = color;
     }
 

@@ -24,9 +24,13 @@ public class Wall {
     @OneToMany
     private List<Baff> baffs;
 
-    public Wall(){}
+    @ManyToOne
+    private Map map;
 
-    public Wall(String image){
+    public Wall() {
+    }
+
+    public Wall(String image) {
         this.image = image;
     }
 
@@ -36,6 +40,14 @@ public class Wall {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public String getImage() {
@@ -53,4 +65,5 @@ public class Wall {
     public void setBaffs(List<Baff> baffs) {
         this.baffs = baffs;
     }
+
 }

@@ -19,10 +19,16 @@ public class Map{
     @OneToOne
     private Game game;
     @OneToMany
-    @JoinTable(name="Maps_Rows",
+    @JoinTable(name="Maps_walls",
             joinColumns = @JoinColumn(name="Maps_id"),
-            inverseJoinColumns = @JoinColumn(name="rows_id"))
-    private List<MatrixRow> walls;
+            inverseJoinColumns = @JoinColumn(name="walls_id"))
+    private List<Wall> walls;
+
+    @OneToMany
+    @JoinTable(name="Maps_Rooms",
+            joinColumns = @JoinColumn(name="Maps_id"),
+            inverseJoinColumns = @JoinColumn(name="Rooms_id"))
+    private List<Room> rooms;
 
     public Map() {
     }
@@ -35,16 +41,24 @@ public class Map{
         this.id = id;
     }
 
-    public List<MatrixRow> getWalls() {
+    public List<Wall> getWalls() {
         return walls;
     }
 
-    public void setWalls(List<MatrixRow> walls) {
+    public void setWalls(List<Wall> walls) {
         this.walls = walls;
     }
 
     public boolean isOpen(int x, int y){
         return true;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 
     public Game getGame() {

@@ -1,7 +1,6 @@
 package ru.rmades.rest.ODT.Game;
 
 import ru.rmades.rest.ODT.Game.Baffs.Card;
-import ru.rmades.rest.ODT.Game.Creatures.Hero;
 import ru.rmades.rest.ODT.Game.Map.Map;
 import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.controller.mobile.model.GameForTransaction;
@@ -34,8 +33,7 @@ public class Game extends GameForTransaction{
         this.users = users;
     }
 
-    @OneToMany
-    private List<Hero>   heroes;
+
     @OneToOne
     private Map map;
     @OneToMany
@@ -61,6 +59,14 @@ public class Game extends GameForTransaction{
         this.id = id;
     }
 
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
     @Override
     public String toString(){
         return getId() + "::" + getName() + ": " + getPassword() + " - Open: " + isOpen();
@@ -68,7 +74,7 @@ public class Game extends GameForTransaction{
 
 
 
-    //    public Game(ArrayList<User>  users, boolean open) {
+    //    public game(List<User>  users, boolean open) {
 //        this.users = users;
 //        this.open = open;
 //

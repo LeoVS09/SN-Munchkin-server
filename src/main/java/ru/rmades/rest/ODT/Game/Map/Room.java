@@ -19,7 +19,9 @@ public class Room extends Wall{
             inverseJoinColumns = @JoinColumn(name="Creature_id"))
     private List<Creature> creatures;
 
+
     public Room(){super();}
 
     public Room(String image){super(image);}
+
 }

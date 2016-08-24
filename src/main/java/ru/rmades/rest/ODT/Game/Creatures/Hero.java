@@ -40,7 +40,7 @@ public class Hero extends Creature{
     private List<ClasS> classes;
 
     public Hero(){}
-    public Hero(short level,short x, short y, Color color){
+    public Hero(short level,short x, short y, Short color){
         super(level,x,y,color);
 
     }

@@ -52,7 +52,7 @@ public class GameDAOWrapper {
 
     public void addUser(String nameOfGame, UserData user, String password)throws Exception{
         Game game = gameDao.findByName(nameOfGame);
-        if(!game.isOpen()) throw new Exception("Game is close");
+        if(!game.isOpen()) throw new Exception("game is close");
         if(!game.getPassword().equals(password)) throw new Exception("Password is incorrect");
         game.getUsers().add(user);
         user.setGame(game);
@@ -74,6 +74,13 @@ public class GameDAOWrapper {
             text += game.toString() + "\n";
         }
         return text;
+    }
+
+    public boolean isStartGame(Game game){
+        for(UserData user: game.getUsers()){
+            if(!user.isStartGame()) return false;
+        }
+        return true;
     }
 
     public Game findByName(String name){
