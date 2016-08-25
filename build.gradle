@@ -33,6 +33,7 @@ dependencies {
 	compile 'com.google.firebase:firebase-server-sdk:[3.0.0,)'
 	compile group: 'commons-io', name: 'commons-io', version: '2.4'
 	compile group: 'javax.json', name: 'javax.json-api', version: '1.0'
+	compile group: 'org.glassfish', name: 'javax.json', version: '1.0.4'
 //	compile 'com.google.firebase:firebase-auth:9.2.0'
 //	compile('org.hibernate:hibernate-core:4.3.6.Final')
 //	compile('javax.servlet:javax.servlet-api:3.1.0')

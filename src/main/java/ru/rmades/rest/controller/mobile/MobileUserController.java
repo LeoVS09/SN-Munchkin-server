@@ -53,6 +53,7 @@ public class MobileUserController {
         String response = "lololol";
 
         try {
+            if(user.getToken() == null || user.getToken() == "") throw new Exception("Not have token");
             UserData userData = userDAO.getIfHave(user);
             if (userData != null){
                 response = encode.getTocken(userData.getId());

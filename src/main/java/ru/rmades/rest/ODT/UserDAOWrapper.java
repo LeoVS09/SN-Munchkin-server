@@ -19,6 +19,7 @@ public class UserDAOWrapper {
     public void save(UserForTransaction user)throws Exception{
         if(user.isEmpty())throw new Exception("User login or password is empty");
         UserData userForSave = new UserData(user.getLogin(),user.getPassword());
+        userForSave.setToken(user.getToken());
         userDao.save(userForSave);
     }
 

@@ -10,6 +10,7 @@ import ru.rmades.rest.ODT.Game.Creatures.HeroDAO;
 import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.Game.GameDAOWrapper;
 import ru.rmades.rest.ODT.Game.Map.*;
+import ru.rmades.rest.ODT.Game.Step;
 import ru.rmades.rest.ODT.UserDAOWrapper;
 import ru.rmades.rest.ODT.UserData;
 import ru.rmades.rest.controller.mobile.firebase.message.TalkAll;
@@ -93,6 +94,32 @@ public class GameCore {
                     wallDAO.save(wall);
                     map.getWalls().set(2*4 - 1 + 2*9*2*4,wall);
                     new TalkAll(game,walls.toString()).run();
+                }catch (Exception e){
+                    log.info("Error: " + e.toString());
+                }
+            }
+        };
+    }
+
+    public Runnable step(Game game,UserData user,Step step){
+        return new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    log.info("Step: -------->" + game.getName() + ":: " + user.getLogin() + ": " + step.toString());
+                }catch (Exception e){
+                    log.info("Error: " + e.toString());
+                }
+            }
+        };
+    }
+
+    public Runnable fight(Game game,UserData user){
+        return new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    log.info("Fight: -------->" + game.getName() + ":: " + user.getLogin());
                 }catch (Exception e){
                     log.info("Error: " + e.toString());
                 }
