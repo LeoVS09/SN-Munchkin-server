@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by Администратор on 25.08.2016.
  */
+
+
 @Transactional
-public interface WallDAO extends CrudRepository<Wall,Long>{
+public interface RoomDAO extends CrudRepository<Room,Long>{
 
 }

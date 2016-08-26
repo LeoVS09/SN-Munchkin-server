@@ -23,7 +23,7 @@ public class UserData extends UserForTransaction{
 
     private int victories;
 
-    private boolean startGame;
+    private boolean startGame = false;
 
     @OneToOne
     private Hero hero;

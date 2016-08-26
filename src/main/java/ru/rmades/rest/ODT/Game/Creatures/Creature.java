@@ -1,10 +1,7 @@
 package ru.rmades.rest.ODT.Game.Creatures;
 
-import ru.rmades.rest.ODT.Game.Baffs.Baff;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * Created by Администратор on 14.08.2016.
@@ -26,11 +23,11 @@ public abstract class Creature {
 
 
 
-    @OneToMany
-    @JoinTable(name="Creatures_Baffs",
-            joinColumns = @JoinColumn(name="Creature_id"),
-            inverseJoinColumns = @JoinColumn(name="Baffs_id"))
-    private List<Baff> baffs;
+//    @OneToMany
+//    @JoinTable(name="Creatures_Baffs",
+//            joinColumns = @JoinColumn(name="Creature_id"),
+//            inverseJoinColumns = @JoinColumn(name="Baffs_id"))
+//    private List<Baff> baffs;
 
     public Creature(){
         level = 1;
@@ -85,11 +82,11 @@ public abstract class Creature {
         this.y = y;
     }
 
-    public List<Baff> getBaffs() {
-        return baffs;
-    }
-
-    public void setBaffs(List<Baff> baffs) {
-        this.baffs = baffs;
-    }
+//    public List<Baff> getBaffs() {
+//        return baffs;
+//    }
+//
+//    public void setBaffs(List<Baff> baffs) {
+//        this.baffs = baffs;
+//    }
 }

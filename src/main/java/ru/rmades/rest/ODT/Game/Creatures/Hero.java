@@ -1,5 +1,6 @@
 package ru.rmades.rest.ODT.Game.Creatures;
 
+import ru.rmades.rest.ODT.Game.Baffs.Card;
 import ru.rmades.rest.ODT.Game.Baffs.ClasS;
 import ru.rmades.rest.ODT.Game.Baffs.Race;
 import ru.rmades.rest.ODT.Game.Baffs.Stuff;
@@ -38,6 +39,12 @@ public class Hero extends Creature{
             joinColumns = @JoinColumn(name="Heroes_id"),
             inverseJoinColumns = @JoinColumn(name="Classes_id"))
     private List<ClasS> classes;
+
+    @OneToMany
+    @JoinTable(name="Heroes_Card",
+            joinColumns = @JoinColumn(name="Heroes_id"),
+            inverseJoinColumns = @JoinColumn(name="Card_id"))
+    private List<Card> cards;
 
     public Hero(){}
     public Hero(short level,short x, short y, Short color){
@@ -91,5 +98,13 @@ public class Hero extends Creature{
 
     public void setClasses(List<ClasS> classes) {
         this.classes = classes;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 }

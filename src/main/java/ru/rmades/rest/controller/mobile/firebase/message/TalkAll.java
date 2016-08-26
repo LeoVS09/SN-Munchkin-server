@@ -7,16 +7,13 @@ import org.springframework.http.MediaType;
 import ru.rmades.rest.ODT.Game.Game;
 import ru.rmades.rest.ODT.UserData;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,18 +21,19 @@ import java.util.List;
  */
 
 public class TalkAll implements Runnable{
-    private Game game;
+    protected Game game;
     private static final Logger log = LoggerFactory.getLogger(TalkAll.class);
-    private HttpHeaders headers = new HttpHeaders();
-    private JsonObjectBuilder message = Json.createObjectBuilder();
-    private URI uri;
-    public TalkAll(Game game,String data){
+    protected HttpHeaders headers = new HttpHeaders();
+    protected URI uri;
+    protected String data;
+    protected String target;
+    protected String title;
+    public TalkAll(Game game,String data,String title){
         this.game = game;
+        this.data = data;
+        this.title = title;
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization","key=AIzaSyAWGFHIeb1vAAUXQzeKTFTDWFDh-8-yXmI");
-        //message.add("data",data);
-        JsonObject  d = Json.createObjectBuilder().add("score","lol").add("time","trol").build();
-//        message.add("data",d);
         try {
             uri = new URI("https://fcm.googleapis.com/fcm/send");
         }catch (Exception e){
@@ -48,24 +46,25 @@ public class TalkAll implements Runnable{
     public void run(){
         try {
             List<UserData> users = getUsers();
-            JsonArrayBuilder tokens = Json.createArrayBuilder();
-
+            ArrayList<String> tokens = new ArrayList<>();
             for(UserData user: users){
                 log.info("-------------->" + user.getLogin() + ": " + user.getToken());
-                tokens.add(user.getToken());
+                if(!tokens.contains(user.getToken())) tokens.add(user.getToken());
+            }
+            if(tokens.size() == 1)
+                target = "\"to\" : \"" + tokens.get(0) + "\"";
+            else{
+                target = "\"registration_ids\" : [ ";
+                for(String token:tokens)
+                    target += "\"" + token + "\",";
+                target = target.substring(0,target.length()-1);
+                target += " ]";
             }
 
-//            if(users.size() == 1)
-                message.add("to", users.get(0).getToken());
-//            else
-//                message.add("registration_ids",tokens);
-
             log.info("--------> Header: " + headers.toString());
-            log.info("--------> Message: " + message.build());
-            sendPost("{ \"data\": {\n" +
-                    "    \"title\": \"We are the champions!\",\n" +
-                    "    \"text\": \"TROL\"\n" +
-                    "  }, \"to\" : \"" + users.get(0).getToken() + "\" }");
+            log.info("--------> Target: " + target);
+            String notification = "\"notification\" : { \"title\" : \"" + title + "\", \"body\" : \"LOL\" }";
+            sendPost("{ " + notification +", \"data\":{ \"inf\" : " + data + "}, " + target + " }");
 //            RequestEntity<JsonObject> request = new RequestEntity(message.build(), headers, HttpMethod.POST,uri);
 //            RequestEntity<JsonObject> request = RequestEntity.post(uri).accept(MediaType.APPLICATION_JSON).header("Authorization","key=AIzaSyAWGFHIeb1vAAUXQzeKTFTDWFDh-8-yXmI").body(message.build());
 //            log.info("--------> Entity: " + request.toString());
@@ -88,6 +87,8 @@ public class TalkAll implements Runnable{
     }
 
     public void sendPost(String body)throws Exception{
+
+        System.out.println("---------->Body: " + body);
 
         URL obj = new URL("https://fcm.googleapis.com/fcm/send");
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();

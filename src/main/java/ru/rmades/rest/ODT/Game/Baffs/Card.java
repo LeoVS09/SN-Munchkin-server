@@ -2,7 +2,6 @@ package ru.rmades.rest.ODT.Game.Baffs;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * Created by Администратор on 14.08.2016.
@@ -23,11 +22,11 @@ public class Card {
     private String image;
     private String description;
 
-    @OneToMany
-    @JoinTable(name="Cards_Baffs",
-                joinColumns = @JoinColumn(name="Cards_id"),
-                inverseJoinColumns = @JoinColumn(name="Baffs_id"))
-    private List<Baff> baffs;
+//    @OneToMany
+//    @JoinTable(name="Cards_Baffs",
+//                joinColumns = @JoinColumn(name="Cards_id"),
+//                inverseJoinColumns = @JoinColumn(name="Baffs_id"))
+//    private List<Baff> baffs;
 
     public Card(){}
 
@@ -69,11 +68,11 @@ public class Card {
         this.description = description;
     }
 
-    public List<Baff> getBaffs(){
-        return baffs;
-    }
-
-    public void setBaffs(List<Baff> baffs){
-        this.baffs = baffs;
-    }
+//    public List<Baff> getBaffs(){
+//        return baffs;
+//    }
+//
+//    public void setBaffs(List<Baff> baffs){
+//        this.baffs = baffs;
+//    }
 }

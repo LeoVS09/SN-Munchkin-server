@@ -30,24 +30,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/mobile/game")
 public class MobileGameController {
+    
     private static final Logger log = LoggerFactory.getLogger(MobileGameController.class);
     private static final JSONWrapper json = new JSONWrapper();
     private static final Encoder encode = new Encoder();
+    
     @Autowired
-    GameDAOWrapper gameDao;
+    private GameDAOWrapper gameDAO;
 
     @Autowired
     private UserDAOWrapper userDAO;
 
     @Autowired
-    GameCore gameCore;
+    private GameCore gameCore;
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
     public ResponseEntity<String> gameCreate(@RequestHeader HttpHeaders headers, @RequestBody GameForTransaction game){
         try{
             log.info("------->" + game.getName() + ": " + game.getPassword());
-            gameDao.save(game,getUser(headers));
-            Thread t = new Thread(new TalkAll(gameDao.findByName(game.getName()),"Create game"));
+            gameDAO.save(game,getUser(headers));
+            Thread t = new Thread(new TalkAll(gameDAO.findByName(game.getName()),"\"Create game\"","String"));
             t.start();
             return new ResponseEntity<String>(json.toString("Success"),HttpStatus.OK);
         }catch (Exception e){
@@ -62,7 +64,7 @@ public class MobileGameController {
             ArrayList<GameForTransaction> games = new ArrayList<GameForTransaction>();
         try{
             getUser(headers);
-            for(Game game: gameDao.findAll()){
+            for(Game game: gameDAO.findAll()){
                 GameForTransaction gameSend = new GameForTransaction(game.getName(),"",game.isOpen());
                 games.add(gameSend);
             }
@@ -78,7 +80,7 @@ public class MobileGameController {
         List<UserForTransaction> users = new ArrayList<UserForTransaction>();
         try{
             UserData userData = getUser(headers);
-            Game gameInBase = gameDao.findByName(game.getName());
+            Game gameInBase = gameDAO.findByName(game.getName());
             if(gameInBase == null) throw new Exception("Invalid game");
             if(!gameInBase.getPassword().equals(game.getPassword())) throw new Exception("Incorrect password");
             for(UserData user: gameInBase.getUsers()){
@@ -87,9 +89,9 @@ public class MobileGameController {
                 users.add(userSend);
             }
 
-            gameDao.addUser(gameInBase,userData);
+            gameDAO.addUser(gameInBase,userData);
             users.add(new UserForTransaction(userData.getLogin(),"lol"));
-            Thread myThread = new Thread(new TalkAll(gameInBase,json.toString(users)));
+            Thread myThread = new Thread(new TalkAll(gameInBase,json.toString(users) ,"UserForTransaction[]"));
             myThread.start();
             return ResponseEntity.ok(json.toString(users));
         }catch (Exception e){
@@ -98,17 +100,17 @@ public class MobileGameController {
         }
     }
 
-    @RequestMapping(value = "/begin", method = RequestMethod.POST)
+    @RequestMapping(value = "/begin", method = RequestMethod.GET)
     public ResponseEntity<String> startGame(@RequestHeader HttpHeaders headers){
         try{
             UserData userData = getUser(headers);
             userData.StartGame();
             userDAO.save(userData);
             Game gameInBase = userData.getGame();
-            if(!gameDao.isStartGame(gameInBase)) return ResponseEntity.ok("Success");
+            if(gameInBase == null) throw new Exception("Not have game");
+            if(!gameDAO.isStartGame(gameInBase)) return ResponseEntity.ok("Success");
 
-
-            new Thread(gameCore.begin(gameInBase));
+            new Thread(gameCore.begin(gameInBase)).start();
             return ResponseEntity.ok("Success");
         }catch (Exception e){
             log.info(e.toString());
@@ -122,7 +124,7 @@ public class MobileGameController {
             UserData user = getUser(headers);
             Game game = user.getGame();
             if(game == null) throw new Exception("Not have game");
-            if(!gameDao.isStartGame(game)) throw new Exception("Game not start");
+            if(!gameDAO.isStartGame(game)) throw new Exception("Game not start");
 //            if(!game.canStepUser(user)) throw new Exception("Not that user step");
             new Thread(gameCore.step(game,user,step));
             return ResponseEntity.ok("Success");
@@ -132,13 +134,13 @@ public class MobileGameController {
         }
     }
 
-    @RequestMapping(value = "/fight",method = RequestMethod.POST)
+    @RequestMapping(value = "/fight",method = RequestMethod.GET)
     public ResponseEntity<String> fight(@RequestHeader HttpHeaders headers){
         try{
             UserData user = getUser(headers);
             Game game = user.getGame();
             if(game == null) throw new Exception("Not have game");
-            if(!gameDao.isStartGame(game)) throw new Exception("Game not start");
+            if(!gameDAO.isStartGame(game)) throw new Exception("Game not start");
 //            if(!game.canStepUser(user)) throw new Exception("Not that user step");
             new Thread(gameCore.fight(game,user));
             return ResponseEntity.ok("Succes");
